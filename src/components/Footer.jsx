@@ -42,11 +42,8 @@ export default function Footer() {
           <p className="text-xs font-medium uppercase tracking-widest mb-1" style={{ color: 'rgba(255,255,255,0.35)' }}>
             Get in touch
           </p>
-          <a href="mailto:kia.ora@kaupeka.nz" className="text-sm text-white/55 hover:text-white transition-colors w-fit">
-            kia.ora@kaupeka.nz
-          </a>
-          <a href="https://kaupeka.nz" className="text-sm text-white/55 hover:text-white transition-colors w-fit">
-            kaupeka.nz
+          <a href="mailto:milner.ture@gmail.com" className="text-sm text-white/55 hover:text-white transition-colors w-fit">
+            milner.ture@gmail.com
           </a>
         </div>
       </div>
