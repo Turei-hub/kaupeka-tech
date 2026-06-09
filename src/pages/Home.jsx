@@ -3,57 +3,53 @@ import { Link } from 'react-router-dom'
 /* ── Hero ────────────────────────────────────────────────── */
 function Hero() {
   return (
-    <section
-      className="relative max-w-6xl mx-auto px-5 pt-20 pb-16 md:pt-28 md:pb-24 text-center rounded-2xl overflow-hidden"
-      style={{
-        backgroundImage: 'url(/hero.png)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-      }}
-    >
-      {/* Dark overlay so text stays readable */}
-      <div className="absolute inset-0 rounded-2xl" style={{ background: 'rgba(11,18,32,0.72)' }} />
+    <section className="relative w-full pt-20 pb-16 md:pt-28 md:pb-24 text-center overflow-hidden">
+      {/* Hero image — full bleed */}
+      <div className="absolute inset-0" style={{ backgroundImage: 'url(/hero.png)', backgroundSize: 'cover', backgroundPosition: 'center' }} />
+      {/* Deep overlay */}
+      <div className="absolute inset-0" style={{ background: 'rgba(11,18,32,0.78)' }} />
+
+      {/* Content */}
       <div className="relative z-10">
-      {/* Kicker */}
-      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium mb-6"
-        style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.10)', color: 'rgba(255,255,255,0.7)' }}>
-        <span className="w-1.5 h-1.5 rounded-full bg-[#1D9E75] animate-pulse" />
-        Auckland, NZ — available for new projects
-      </div>
+        {/* Kicker */}
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium mb-6"
+          style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.14)', color: 'rgba(255,255,255,0.8)' }}>
+          <span className="w-1.5 h-1.5 rounded-full bg-[#1D9E75] animate-pulse" />
+          Auckland, NZ — available for new projects
+        </div>
 
-      {/* H1 */}
-      <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold leading-[1.08] tracking-tight text-white max-w-3xl mx-auto">
-        We build the branch.<br />
-        <span style={{ color: '#1D9E75' }}>You grow the tree.</span>
-      </h1>
+        {/* H1 */}
+        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold leading-[1.08] tracking-tight text-white max-w-3xl mx-auto">
+          We build the branch.<br />
+          <span className="text-gradient-teal">You grow the tree.</span>
+        </h1>
 
-      {/* Subtext */}
-      <p className="mt-6 text-base md:text-lg max-w-xl mx-auto leading-relaxed"
-        style={{ color: 'rgba(255,255,255,0.55)' }}>
-        Kaupeka Tech is a digital studio building websites and SaaS products for NZ businesses,
-        Māori organisations, and anyone who needs tech that actually works.
-      </p>
+        {/* Subtext */}
+        <p className="mt-6 text-base md:text-lg max-w-xl mx-auto leading-relaxed" style={{ color: 'rgba(255,255,255,0.65)' }}>
+          Kaupeka Tech is a digital studio building websites and SaaS products for NZ businesses,
+          Māori organisations, and anyone who needs tech that actually works.
+        </p>
 
-      {/* CTAs */}
-      <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3">
-        <Link
-          to="/work"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-medium text-white transition-all hover:brightness-110"
-          style={{ background: '#185FA5' }}
-        >
-          See our work
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </Link>
-        <Link
-          to="/services"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-medium text-white/80 hover:text-white transition-colors"
-          style={{ border: '1px solid rgba(255,255,255,0.14)' }}
-        >
-          How we work
-        </Link>
-      </div>
+        {/* CTAs */}
+        <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <Link
+            to="/work"
+            className="btn-shimmer inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white transition-all hover:brightness-110 hover:scale-[1.02]"
+            style={{ background: 'linear-gradient(135deg, #185FA5 0%, #1a6fc4 100%)', boxShadow: '0 0 24px rgba(24,95,165,0.45)' }}
+          >
+            See our work
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </Link>
+          <Link
+            to="/services"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-medium text-white/80 hover:text-white hover:bg-white/10 transition-all"
+            style={{ border: '1px solid rgba(255,255,255,0.18)' }}
+          >
+            How we work
+          </Link>
+        </div>
       </div>
     </section>
   )
@@ -61,48 +57,23 @@ function Hero() {
 
 /* ── Social Proof Strip ──────────────────────────────────── */
 const stats = [
-  { value: '12+', label: 'Projects delivered' },
-  { value: '5', label: 'Live client sites' },
-  { value: '100%', label: 'Real products, real clients' },
+  { value: '12+', label: 'Projects delivered', color: '#1D9E75' },
+  { value: '5',   label: 'Live client sites',  color: '#185FA5' },
+  { value: '100%', label: 'Real products, real clients', color: '#EF9F27' },
 ]
-
 const avatars = ['RA', 'JT', 'ME', 'RY']
 const avatarColors = ['#185FA5', '#1D9E75', '#EF9F27', '#185FA5']
 
 function SocialProof() {
   return (
-    <section
-      className="w-full py-6"
-      style={{ borderTop: '1px solid rgba(255,255,255,0.08)', borderBottom: '1px solid rgba(255,255,255,0.08)' }}
-    >
-      <div className="max-w-6xl mx-auto px-5 flex flex-col sm:flex-row items-center justify-between gap-6">
-        {/* Avatar stack + label */}
-        <div className="flex items-center gap-3">
-          <div className="flex -space-x-2">
-            {avatars.map((initials, i) => (
-              <div
-                key={initials}
-                className="w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-semibold text-white ring-2"
-                style={{ background: avatarColors[i], ringColor: '#0B1220' }}
-              >
-                {initials}
-              </div>
-            ))}
+    <section className="w-full py-6" style={{ borderTop: '1px solid rgba(255,255,255,0.08)', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+      <div className="max-w-6xl mx-auto px-5 flex items-center justify-center gap-12">
+        {stats.map(({ value, label, color }) => (
+          <div key={label} className="text-center">
+            <p className="text-lg font-bold leading-none" style={{ color }}>{value}</p>
+            <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.45)' }}>{label}</p>
           </div>
-          <p className="text-sm" style={{ color: 'rgba(255,255,255,0.55)' }}>
-            Trusted by NZ businesses & Māori organisations
-          </p>
-        </div>
-
-        {/* Stats */}
-        <div className="flex items-center gap-8">
-          {stats.map(({ value, label }) => (
-            <div key={label} className="text-center">
-              <p className="text-lg font-semibold text-white leading-none">{value}</p>
-              <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.45)' }}>{label}</p>
-            </div>
-          ))}
-        </div>
+        ))}
       </div>
     </section>
   )
@@ -162,32 +133,28 @@ function ServicesStrip() {
         {services.map(({ name, desc, price, icon, color }) => (
           <div
             key={name}
-            className="flex flex-col gap-4 p-6 rounded-2xl transition-all hover:translate-y-[-2px]"
-            style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
+            className="card-hover flex flex-col gap-4 p-6 rounded-2xl"
+            style={{
+              background: 'rgba(255,255,255,0.04)',
+              border: '1px solid rgba(255,255,255,0.08)',
+            }}
+            onMouseEnter={e => { e.currentTarget.style.boxShadow = `0 0 32px ${color}33`; e.currentTarget.style.borderColor = `${color}55` }}
+            onMouseLeave={e => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)' }}
           >
-            <div
-              className="w-10 h-10 rounded-xl flex items-center justify-center"
-              style={{ background: `${color}22`, color }}
-            >
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: `${color}22`, color }}>
               {icon}
             </div>
             <div>
               <h3 className="text-base font-semibold text-white">{name}</h3>
               <p className="text-sm mt-1 leading-relaxed" style={{ color: 'rgba(255,255,255,0.55)' }}>{desc}</p>
             </div>
-            <p className="text-sm font-medium mt-auto" style={{ color }}>
-              {price}
-            </p>
+            <p className="text-sm font-semibold mt-auto" style={{ color }}>{price}</p>
           </div>
         ))}
       </div>
 
       <div className="text-center mt-8">
-        <Link
-          to="/services"
-          className="inline-flex items-center gap-1.5 text-sm transition-colors hover:text-white"
-          style={{ color: 'rgba(255,255,255,0.55)' }}
-        >
+        <Link to="/services" className="inline-flex items-center gap-1.5 text-sm transition-colors hover:text-white" style={{ color: 'rgba(255,255,255,0.55)' }}>
           See full service breakdown
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
             <path d="M2.5 7h9M8 3.5l3.5 3.5L8 10.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -203,25 +170,31 @@ function CTABanner() {
   return (
     <section className="max-w-6xl mx-auto px-5 pb-20">
       <div
-        className="rounded-2xl px-8 py-12 md:py-16 text-center"
-        style={{ background: 'linear-gradient(135deg, #185FA5 0%, #0d3d6b 100%)', border: '1px solid rgba(255,255,255,0.12)' }}
+        className="relative rounded-3xl px-8 py-14 md:py-16 text-center overflow-hidden"
+        style={{
+          background: 'linear-gradient(135deg, #0d3d6b 0%, #185FA5 50%, #1a6e52 100%)',
+          border: '1px solid rgba(255,255,255,0.12)',
+          boxShadow: '0 0 60px rgba(24,95,165,0.3)',
+        }}
       >
-        <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">
-          Ready to build something real?
-        </h2>
-        <p className="text-sm md:text-base mb-7" style={{ color: 'rgba(255,255,255,0.7)' }}>
-          Tell us about your project. We'll come back within one business day.
-        </p>
-        <Link
-          to="/contact"
-          className="inline-flex items-center gap-2 px-7 py-3 rounded-xl text-sm font-medium text-white transition-all hover:brightness-110"
-          style={{ background: '#1D9E75' }}
-        >
-          Start a project
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </Link>
+        <div className="relative z-10">
+          <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">
+            Ready to build something real?
+          </h2>
+          <p className="text-sm md:text-base mb-7" style={{ color: 'rgba(255,255,255,0.75)' }}>
+            Tell us about your project. We'll come back within one business day.
+          </p>
+          <Link
+            to="/contact"
+            className="btn-shimmer inline-flex items-center gap-2 px-7 py-3 rounded-xl text-sm font-semibold text-white transition-all hover:brightness-110 hover:scale-[1.02]"
+            style={{ background: '#1D9E75', boxShadow: '0 0 20px rgba(29,158,117,0.5)' }}
+          >
+            Start a project
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </Link>
+        </div>
       </div>
     </section>
   )
