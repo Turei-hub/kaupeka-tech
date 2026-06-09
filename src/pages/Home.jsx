@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { useFadeIn } from '../hooks/useFadeIn'
 
 /* ── Hero ────────────────────────────────────────────────── */
 function Hero() {
@@ -10,7 +11,7 @@ function Hero() {
       <div className="absolute inset-0" style={{ background: 'rgba(11,18,32,0.78)' }} />
 
       {/* Content */}
-      <div className="relative z-10">
+      <div className="relative z-10 fade-up visible">
         {/* Kicker */}
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium mb-6"
           style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.14)', color: 'rgba(255,255,255,0.8)' }}>
@@ -65,8 +66,9 @@ const avatars = ['RA', 'JT', 'ME', 'RY']
 const avatarColors = ['#185FA5', '#1D9E75', '#EF9F27', '#185FA5']
 
 function SocialProof() {
+  const ref = useFadeIn(0)
   return (
-    <section className="w-full py-6" style={{ borderTop: '1px solid rgba(255,255,255,0.08)', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+    <section ref={ref} className="fade-up w-full py-6" style={{ borderTop: '1px solid rgba(255,255,255,0.08)', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
       <div className="max-w-6xl mx-auto px-5 flex items-center justify-center gap-12">
         {stats.map(({ value, label, color }) => (
           <div key={label} className="text-center">
@@ -120,9 +122,14 @@ const services = [
 ]
 
 function ServicesStrip() {
+  const headingRef = useFadeIn(0)
+  const card0 = useFadeIn(0)
+  const card1 = useFadeIn(100)
+  const card2 = useFadeIn(200)
+  const cardRefs = [card0, card1, card2]
   return (
     <section className="max-w-6xl mx-auto px-5 py-16 md:py-20">
-      <div className="text-center mb-10">
+      <div ref={headingRef} className="fade-up text-center mb-10">
         <p className="text-xs font-medium uppercase tracking-widest mb-3" style={{ color: 'rgba(255,255,255,0.35)' }}>
           What we offer
         </p>
@@ -130,10 +137,11 @@ function ServicesStrip() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {services.map(({ name, desc, price, icon, color }) => (
+        {services.map(({ name, desc, price, icon, color }, i) => (
           <div
+            ref={cardRefs[i]}
             key={name}
-            className="card-hover flex flex-col gap-4 p-6 rounded-2xl"
+            className="card-hover fade-up flex flex-col gap-4 p-6 rounded-2xl"
             style={{
               background: 'rgba(255,255,255,0.04)',
               border: '1px solid rgba(255,255,255,0.08)',
@@ -167,8 +175,9 @@ function ServicesStrip() {
 
 /* ── CTA Banner ──────────────────────────────────────────── */
 function CTABanner() {
+  const ref = useFadeIn(0)
   return (
-    <section className="max-w-6xl mx-auto px-5 pb-20">
+    <section ref={ref} className="fade-up max-w-6xl mx-auto px-5 pb-20">
       <div
         className="relative rounded-3xl px-8 py-14 md:py-16 text-center overflow-hidden"
         style={{

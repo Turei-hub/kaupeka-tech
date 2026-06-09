@@ -37,6 +37,17 @@ body {
   transform: translateY(-3px);
 }
 
+/* ── Scroll fade-in ─────────────────────────────────────── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* ── Shimmer button ─────────────────────────────────────── */
 @keyframes shimmer {
   0%   { background-position: -200% center; }
