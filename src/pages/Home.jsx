@@ -3,7 +3,17 @@ import { Link } from 'react-router-dom'
 /* ── Hero ────────────────────────────────────────────────── */
 function Hero() {
   return (
-    <section className="max-w-6xl mx-auto px-5 pt-20 pb-16 md:pt-28 md:pb-24 text-center">
+    <section
+      className="relative max-w-6xl mx-auto px-5 pt-20 pb-16 md:pt-28 md:pb-24 text-center rounded-2xl overflow-hidden"
+      style={{
+        backgroundImage: 'url(/hero.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
+      {/* Dark overlay so text stays readable */}
+      <div className="absolute inset-0 rounded-2xl" style={{ background: 'rgba(11,18,32,0.72)' }} />
+      <div className="relative z-10">
       {/* Kicker */}
       <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium mb-6"
         style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.10)', color: 'rgba(255,255,255,0.7)' }}>
@@ -43,6 +53,7 @@ function Hero() {
         >
           How we work
         </Link>
+      </div>
       </div>
     </section>
   )
