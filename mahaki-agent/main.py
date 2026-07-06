@@ -40,8 +40,6 @@ async def run() -> None:
 
     if not cfg.agent.anthropic_api_key:
         sys.exit("ANTHROPIC_API_KEY is not set — copy .env.example to .env and fill it in.")
-    if not cfg.wake.access_key:
-        sys.exit("PICOVOICE_ACCESS_KEY is not set — get a free key at https://console.picovoice.ai.")
 
     loop = asyncio.get_running_loop()
     utterances: asyncio.Queue[bytes] = asyncio.Queue()

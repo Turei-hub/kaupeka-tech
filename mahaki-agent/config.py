@@ -14,7 +14,7 @@ load_dotenv()
 
 @dataclass(frozen=True)
 class AudioConfig:
-    sample_rate: int = 16_000          # Porcupine and Whisper both want 16 kHz mono
+    sample_rate: int = 16_000          # openWakeWord and Whisper both want 16 kHz mono
     channels: int = 1
     # Utterance recording (after wake word fires)
     silence_threshold: int = 500       # RMS below this counts as silence
@@ -25,13 +25,11 @@ class AudioConfig:
 
 @dataclass(frozen=True)
 class WakeWordConfig:
-    access_key: str = field(default_factory=lambda: os.getenv("PICOVOICE_ACCESS_KEY", ""))
-    # Path to the custom "Mahaki" .ppn trained on https://console.picovoice.ai
-    # (Porcupine has no built-in "Mahaki"). Until that file exists, we fall
-    # back to the built-in keyword below so the pipeline can be tested.
-    keyword_path: str = field(default_factory=lambda: os.getenv("PORCUPINE_KEYWORD_PATH", ""))
-    fallback_builtin_keyword: str = "porcupine"
-    sensitivity: float = 0.6
+    # Path to a custom openWakeWord .onnx model (e.g. a trained "Mahaki" model).
+    # Leave unset to use the bundled "hey_jarvis" model while testing.
+    model_path: str = field(default_factory=lambda: os.getenv("OWW_MODEL_PATH", ""))
+    # Prediction score above which a detection is declared (0–1).
+    threshold: float = 0.5
 
 
 @dataclass(frozen=True)

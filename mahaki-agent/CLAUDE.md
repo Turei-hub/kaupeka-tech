@@ -10,7 +10,7 @@ Not based on the LAE Engine — separate architecture, separate purpose.
 
 Two decoupled layers, on purpose:
 
-- **Speech I/O** (`audio/`): wake word (Porcupine, background thread) →
+- **Speech I/O** (`audio/`): wake word (openWakeWord, background thread) →
   utterance recording (RMS silence detection) → STT (faster-whisper) →
   TTS (pyttsx3 behind a swappable `TTSEngine` interface).
 - **Agent** (`agent/`): `Orchestrator` takes text, runs the Claude tool-use
@@ -35,17 +35,18 @@ them to a new `Orchestrator` — don't touch `audio/`.
 ```bash
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt   # needs portaudio + espeak-ng on Linux
-cp .env.example .env              # fill in ANTHROPIC_API_KEY, PICOVOICE_ACCESS_KEY
+cp .env.example .env              # fill in ANTHROPIC_API_KEY (no other keys needed)
 python main.py
 ```
 
 ## Wake word status
 
-Porcupine has no built-in "Mahaki" — train the custom keyword at
-https://console.picovoice.ai (free), download the `.ppn` for your platform
-into `models/`, and set `PORCUPINE_KEYWORD_PATH` in `.env`. Until then the
-app falls back to the built-in "porcupine" keyword so the pipeline is
-testable end-to-end.
+openWakeWord has no pretrained "Mahaki" model — train one via the
+[openWakeWord training notebook](https://github.com/dscripka/openWakeWord#training-new-models)
+(free, no account), export the `.onnx` file into `models/`, and set
+`OWW_MODEL_PATH` in `.env`. Until then the app falls back to the bundled
+"hey_jarvis" model so the pipeline is testable end-to-end. No API key or
+vendor account is needed at any point.
 
 ## Adding a tool
 

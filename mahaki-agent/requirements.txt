@@ -1,5 +1,5 @@
 # Speech I/O (fully local — no cloud STT/TTS costs)
-pvporcupine>=3.0.0        # wake word detection (needs free Picovoice access key)
+openwakeword>=0.6.0       # wake word detection (fully local, no account/API key required)
 pyaudio>=0.2.14           # mic capture (needs portaudio: apt install portaudio19-dev / brew install portaudio)
 faster-whisper>=1.0.0     # local STT, CTranslate2 backend — much faster than openai-whisper on CPU
 pyttsx3>=2.90             # offline TTS (needs espeak-ng on Linux; uses SAPI5 on Windows, NSSpeech on macOS)

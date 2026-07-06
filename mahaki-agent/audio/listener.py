@@ -1,4 +1,4 @@
-"""Mic capture + Porcupine wake word detection.
+"""Mic capture + openWakeWord wake-word detection.
 
 Runs entirely in a background thread so the asyncio side of the app never
 blocks on audio I/O. When the wake word fires, the listener records one
@@ -6,7 +6,7 @@ utterance (ended by silence or a hard time cap) and hands the raw 16 kHz
 mono int16 PCM to `on_utterance` — in Mahaki that callback bridges into an
 asyncio.Queue via loop.call_soon_threadsafe.
 
-pyaudio / pvporcupine are imported lazily inside start() so the agent layer
+openwakeword / pyaudio are imported lazily inside start() so the agent layer
 and the test suite can run on machines without audio hardware or portaudio.
 """
 
@@ -20,6 +20,8 @@ from typing import Callable
 from config import AudioConfig, WakeWordConfig
 
 log = logging.getLogger(__name__)
+
+_OWW_CHUNK = 1280   # 80 ms at 16 kHz — openWakeWord's expected frame size
 
 
 class WakeWordListener:
@@ -64,56 +66,52 @@ class WakeWordListener:
     # -- thread body ---------------------------------------------------
 
     def _run(self) -> None:
-        import pvporcupine
+        import numpy as np
         import pyaudio
+        from openwakeword.model import Model
+        from openwakeword.utils import download_models
 
-        if self._wake_cfg.keyword_path:
-            porcupine = pvporcupine.create(
-                access_key=self._wake_cfg.access_key,
-                keyword_paths=[self._wake_cfg.keyword_path],
-                sensitivities=[self._wake_cfg.sensitivity],
-            )
-            log.info("Wake word: custom keyword file %s", self._wake_cfg.keyword_path)
+        # Ensure pretrained models are present (no-op if already downloaded).
+        download_models()
+
+        model_path = self._wake_cfg.model_path
+        if model_path:
+            oww = Model(wakeword_models=[model_path], inference_framework="onnx")
+            log.info("Wake word: custom model %s", model_path)
         else:
-            # No trained "Mahaki" .ppn yet — fall back to a built-in keyword
-            # so the rest of the pipeline can be exercised.
-            porcupine = pvporcupine.create(
-                access_key=self._wake_cfg.access_key,
-                keywords=[self._wake_cfg.fallback_builtin_keyword],
-                sensitivities=[self._wake_cfg.sensitivity],
-            )
+            oww = Model(wakeword_models=["hey_jarvis"], inference_framework="onnx")
             log.warning(
-                "PORCUPINE_KEYWORD_PATH not set — using built-in wake word %r. "
-                "Train 'Mahaki' at https://console.picovoice.ai and set the path in .env.",
-                self._wake_cfg.fallback_builtin_keyword,
+                "OWW_MODEL_PATH not set — using bundled 'hey_jarvis' wake word. "
+                "Train a 'Mahaki' model via openWakeWord's training notebook and "
+                "set OWW_MODEL_PATH in .env.",
             )
 
         pa = pyaudio.PyAudio()
         stream = pa.open(
-            rate=porcupine.sample_rate,
+            rate=self._audio_cfg.sample_rate,
             channels=self._audio_cfg.channels,
             format=pyaudio.paInt16,
             input=True,
-            frames_per_buffer=porcupine.frame_length,
+            frames_per_buffer=_OWW_CHUNK,
         )
 
         try:
             while not self._stop.is_set():
-                pcm_bytes = stream.read(porcupine.frame_length, exception_on_overflow=False)
+                pcm_bytes = stream.read(_OWW_CHUNK, exception_on_overflow=False)
                 if self._muted.is_set():
                     continue
-                pcm = struct.unpack_from("h" * porcupine.frame_length, pcm_bytes)
-                if porcupine.process(pcm) >= 0:
+                pcm = np.frombuffer(pcm_bytes, dtype=np.int16)
+                prediction = oww.predict(pcm)
+                if any(score >= self._wake_cfg.threshold for score in prediction.values()):
                     log.info("Wake word detected")
                     if self._on_wake:
                         self._on_wake()
-                    utterance = self._record_utterance(stream, porcupine.frame_length)
+                    utterance = self._record_utterance(stream, _OWW_CHUNK)
                     if utterance:
                         self._on_utterance(utterance)
         finally:
             stream.close()
             pa.terminate()
-            porcupine.delete()
 
     def _record_utterance(self, stream, frame_length: int) -> bytes:
         """Record until sustained silence or the max-utterance cap."""
