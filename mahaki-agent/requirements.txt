@@ -1,0 +1,14 @@
+# Speech I/O (fully local — no cloud STT/TTS costs)
+openwakeword>=0.6.0       # wake word detection (fully local, no account/API key required)
+pyaudio>=0.2.14           # mic capture (needs portaudio: apt install portaudio19-dev / brew install portaudio)
+faster-whisper>=1.0.0     # local STT, CTranslate2 backend — much faster than openai-whisper on CPU
+pyttsx3>=2.90             # offline TTS (needs espeak-ng on Linux; uses SAPI5 on Windows, NSSpeech on macOS)
+numpy>=1.26.0
+
+# Agent / reasoning layer
+anthropic>=0.40.0
+python-dotenv>=1.0.0
+
+# Dev
+pytest>=8.0.0
+pytest-asyncio>=0.23.0
