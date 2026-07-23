@@ -42,8 +42,8 @@ export default function Footer() {
           <p className="text-xs font-medium uppercase tracking-widest mb-1" style={{ color: 'rgba(255,255,255,0.35)' }}>
             Get in touch
           </p>
-          <a href="mailto:milner.ture@gmail.com" className="text-sm text-white/55 hover:text-white transition-colors w-fit">
-            milner.ture@gmail.com
+          <a href="mailto:milner.turei@gmail.com" className="text-sm text-white/55 hover:text-white transition-colors w-fit">
+            milner.turei@gmail.com
           </a>
         </div>
       </div>

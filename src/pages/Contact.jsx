@@ -24,7 +24,7 @@ function Field({ label, error, children }) {
 }
 
 const details = [
-  { label: 'Email', value: 'kia.ora@kaupeka.nz', href: 'mailto:kia.ora@kaupeka.nz' },
+  { label: 'Email', value: 'milner.turei@gmail.com', href: 'mailto:milner.turei@gmail.com' },
   { label: 'Based in', value: 'Tāmaki Makaurau, Auckland NZ', href: null },
   { label: 'Response time', value: 'Within one business day', href: null },
 ]
@@ -173,7 +173,7 @@ export default function Contact() {
 
             {status === 'error' && (
               <p className="text-sm" style={{ color: '#EF9F27' }}>
-                Something went wrong. Please try again or email us directly at kia.ora@kaupeka.nz
+                Something went wrong. Please try again or email us directly at milner.turei@gmail.com
               </p>
             )}
 
