@@ -1,6 +1,6 @@
 """Pathway alignment tool — first registered tool (stub).
 
-Matches a client's needs against Kaupeka Tech's delivery pathways. The
+Matches a client's needs against Kaupeka Digital's delivery pathways. The
 dataset below is a placeholder; wire it to the real pathway/client source
 (spreadsheet, CRM, database) when that's decided. The tool's interface —
 name, description, schema — is what Claude sees, so keep those accurate
@@ -53,7 +53,7 @@ def register(registry: ToolRegistry) -> None:
     registry.tool(
         name="pathway_alignment",
         description=(
-            "Match a client to Kaupeka Tech delivery pathways based on a plain-language "
+            "Match a client to Kaupeka Digital delivery pathways based on a plain-language "
             "description of their needs. Use whenever Turei asks which pathway fits a "
             "client or how to align a client's request with what Kaupeka offers."
         ),

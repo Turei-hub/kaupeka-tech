@@ -27,7 +27,7 @@ function Hero() {
 
         {/* Subtext */}
         <p className="mt-6 text-base md:text-lg max-w-xl mx-auto leading-relaxed" style={{ color: 'rgba(255,255,255,0.65)' }}>
-          Kaupeka Tech is a digital studio building websites and SaaS products for NZ businesses,
+          Kaupeka Digital is a studio building websites and SaaS products for NZ businesses,
           Māori organisations, and anyone who needs tech that actually works.
         </p>
 

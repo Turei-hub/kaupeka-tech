@@ -54,7 +54,7 @@ export default function Footer() {
         style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}
       >
         <p className="text-xs" style={{ color: 'rgba(255,255,255,0.35)' }}>
-          © {new Date().getFullYear()} Kaupeka Tech Ltd. All rights reserved.
+          © {new Date().getFullYear()} Kaupeka Digital Ltd. All rights reserved.
         </p>
         <p className="text-xs font-medium" style={{ color: '#1D9E75' }}>
           Nō konei. Built here.

@@ -69,7 +69,7 @@ class AgentConfig:
     max_tool_rounds: int = 5           # safety cap on tool-use loops per request
     history_turns: int = 12            # rolling conversation memory (user+assistant messages)
     system_prompt: str = (
-        "You are Mahaki, a local voice assistant for Turei Milner of Kaupeka Tech. "
+        "You are Mahaki, a local voice assistant for Turei Milner of Kaupeka Digital. "
         "Your replies are spoken aloud by a TTS engine, so keep them short, "
         "conversational, and free of markdown, bullet lists, or code blocks. "
         "Use the tools available to you when a request matches one. "

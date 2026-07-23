@@ -13,7 +13,7 @@ const values = [
   },
   {
     title: 'Grounded in community.',
-    desc: 'Kaupeka Tech was built with Māori organisations and NZ businesses in mind. We know what it means to work hard for something that matters.',
+    desc: 'Kaupeka Digital was built with Māori organisations and NZ businesses in mind. We know what it means to work hard for something that matters.',
     accent: '#EF9F27',
   },
 ]
@@ -95,7 +95,7 @@ export default function About() {
               30 weeks ago I made the decision to change everything. I put down the tools and picked up a keyboard. I struggled through the long nights, the frustrating bugs, the moments where giving up felt easier. But I kept going — and now I'm building full-stack applications from scratch.
             </p>
             <p className="text-lg leading-relaxed" style={{ color: 'rgba(255,255,255,0.8)' }}>
-              Kaupeka Tech is the result of that journey. Built by someone who knows what it means to work hard for something, and who refuses to ship anything less than quality.
+              Kaupeka Digital is the result of that journey. Built by someone who knows what it means to work hard for something, and who refuses to ship anything less than quality.
             </p>
 
             {/* Pull quote */}
