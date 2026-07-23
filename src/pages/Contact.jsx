@@ -102,10 +102,8 @@ export default function Contact() {
           Get in touch
         </div>
         <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold leading-[1.08] tracking-tight text-white">
-          Let&apos;s build
-        </h1>
-        <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold leading-[1.08] tracking-tight" style={{ color: '#1D9E75' }}>
-          something real.
+          Let&apos;s build<br />
+          <span style={{ color: '#1D9E75' }}>something real.</span>
         </h1>
         <p className="mt-6 text-lg max-w-xl leading-relaxed" style={{ color: 'rgba(255,255,255,0.55)' }}>
           Tell us what you&apos;re building. We respond within one business day — no automated replies, just Turei.

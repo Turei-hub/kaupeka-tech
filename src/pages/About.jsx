@@ -75,10 +75,8 @@ export default function About() {
           About
         </div>
         <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold leading-[1.08] tracking-tight text-white">
-          Built from the
-        </h1>
-        <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold leading-[1.08] tracking-tight" style={{ color: '#1D9E75' }}>
-          ground up.
+          Built from the<br />
+          <span style={{ color: '#1D9E75' }}>ground up.</span>
         </h1>
       </section>
 

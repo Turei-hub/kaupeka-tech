@@ -7,10 +7,12 @@ import Services from './pages/Services'
 import About from './pages/About'
 import Contact from './pages/Contact'
 import RootsBg from './components/RootsBg'
+import Seo from './components/Seo'
 
 export default function App() {
   return (
     <BrowserRouter>
+      <Seo />
       <div className="flex flex-col min-h-screen" style={{ background: '#0B1220' }}>
         <RootsBg />
         <Nav />

@@ -199,10 +199,8 @@ export default function Services() {
           Services
         </div>
         <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold leading-[1.08] tracking-tight text-white">
-          Three ways to
-        </h1>
-        <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold leading-[1.08] tracking-tight" style={{ color: '#1D9E75' }}>
-          work with us.
+          Three ways to<br />
+          <span style={{ color: '#1D9E75' }}>work with us.</span>
         </h1>
         <p className="mt-6 text-lg max-w-xl leading-relaxed" style={{ color: 'rgba(255,255,255,0.55)' }}>
           Whether you need a sharp new website, a full product build, or an ongoing tech partner — we've got a model that fits.
