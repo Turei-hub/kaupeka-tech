@@ -1,0 +1,60 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kaupeka Digital">
+  <title>Kaupeka Digital</title>
+  <desc>A circuit-board tree in teal and green on a dark background, with the wordmark Kaupeka Digital.</desc>
+  <defs>
+    <linearGradient id="kd-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0d2723"/>
+      <stop offset="1" stop-color="#07130f"/>
+    </linearGradient>
+    <linearGradient id="kd-trace" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#0f8a5c"/>
+      <stop offset="1" stop-color="#54e6a2"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="0" y="0" width="400" height="400" rx="76" fill="url(#kd-bg)"/>
+
+  <g fill="none" stroke="url(#kd-trace)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M200 304 V124"/>
+    <path d="M200 304 H162 V328"/>
+    <path d="M200 304 H238 V328"/>
+    <path d="M162 304 H124 V320"/>
+    <path d="M238 304 H276 V320"/>
+    <path d="M200 258 H234 V222"/>
+    <path d="M200 258 H166 V222"/>
+    <path d="M200 216 H262 V174"/>
+    <path d="M200 216 H138 V174"/>
+    <path d="M200 178 H240 V144"/>
+    <path d="M200 178 H160 V144"/>
+    <path d="M262 198 H290 V176"/>
+    <path d="M138 198 H110 V176"/>
+    <path d="M200 124 V106"/>
+  </g>
+
+  <g fill="#3ecf92">
+    <path d="M200 104 C207 96 207 84 200 78 C193 84 193 96 200 104 Z"/>
+    <path d="M226 208 C234 202 236 191 231 184 C223 189 220 200 226 208 Z"/>
+    <path d="M174 208 C166 202 164 191 169 184 C177 189 180 200 174 208 Z"/>
+    <path d="M214 158 C222 153 225 142 219 135 C212 140 209 151 214 158 Z"/>
+    <path d="M186 158 C178 153 175 142 181 135 C188 140 191 151 186 158 Z"/>
+  </g>
+
+  <g fill="#5fe6ab">
+    <circle cx="234" cy="220" r="4.5"/>
+    <circle cx="166" cy="220" r="4.5"/>
+    <circle cx="240" cy="142" r="4.5"/>
+    <circle cx="160" cy="142" r="4.5"/>
+    <circle cx="290" cy="174" r="4"/>
+    <circle cx="110" cy="174" r="4"/>
+    <circle cx="124" cy="318" r="3.5"/>
+    <circle cx="276" cy="318" r="3.5"/>
+  </g>
+
+  <g fill="#efa02a">
+    <circle cx="262" cy="172" r="5"/>
+    <circle cx="138" cy="172" r="5"/>
+    <circle cx="200" cy="104" r="5"/>
+  </g>
+
+  <text x="200" y="360" text-anchor="middle" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="30" font-weight="600" letter-spacing="4" fill="#ffffff">KAUPEKA DIGITAL</text>
+</svg>
