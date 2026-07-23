@@ -28,8 +28,11 @@ class WakeWordConfig:
     # Path to a custom openWakeWord .onnx model (e.g. a trained "Mahaki" model).
     # Leave unset to use the bundled "hey_jarvis" model while testing.
     model_path: str = field(default_factory=lambda: os.getenv("OWW_MODEL_PATH", ""))
-    # Prediction score above which a detection is declared (0–1).
-    threshold: float = 0.5
+    # Prediction score above which a detection is declared (0–1). The trained
+    # model scores non-wake speech/noise ~0.00 (huge margin), so a lowish
+    # threshold improves recall without risking false wakes. Raise toward 0.5+
+    # if a noisy room produces false triggers.
+    threshold: float = field(default_factory=lambda: float(os.getenv("OWW_THRESHOLD", "0.4")))
 
 
 @dataclass(frozen=True)
@@ -53,8 +56,15 @@ class TtsConfig:
 
 @dataclass(frozen=True)
 class AgentConfig:
+    # Which LLM answers: "gemini" (free tier via Google AI Studio), "anthropic",
+    # or "openai". The audio layer and tools are identical across providers.
+    provider: str = field(default_factory=lambda: os.getenv("LLM_PROVIDER", "gemini").strip().lower())
     anthropic_api_key: str = field(default_factory=lambda: os.getenv("ANTHROPIC_API_KEY", ""))
-    model: str = field(default_factory=lambda: os.getenv("CLAUDE_MODEL", "claude-opus-4-8"))
+    gemini_api_key: str = field(default_factory=lambda: os.getenv("GEMINI_API_KEY", ""))
+    openai_api_key: str = field(default_factory=lambda: os.getenv("OPENAI_API_KEY", ""))
+    # Model override; blank means each backend picks a sensible default
+    # (claude-opus-4-8 / gemini-2.5-flash / gpt-4o-mini).
+    model: str = field(default_factory=lambda: os.getenv("LLM_MODEL", ""))
     max_tokens: int = 1024
     max_tool_rounds: int = 5           # safety cap on tool-use loops per request
     history_turns: int = 12            # rolling conversation memory (user+assistant messages)
@@ -65,6 +75,16 @@ class AgentConfig:
         "Use the tools available to you when a request matches one. "
         "If you don't know something, say so briefly."
     )
+
+    @property
+    def active_api_key(self) -> str:
+        """The API key for the currently selected provider."""
+        return {
+            "anthropic": self.anthropic_api_key,
+            "gemini": self.gemini_api_key,
+            "google": self.gemini_api_key,
+            "openai": self.openai_api_key,
+        }.get(self.provider, "")
 
 
 @dataclass(frozen=True)

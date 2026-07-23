@@ -38,8 +38,11 @@ def build_registry() -> ToolRegistry:
 async def run() -> None:
     cfg = load_config()
 
-    if not cfg.agent.anthropic_api_key:
-        sys.exit("ANTHROPIC_API_KEY is not set — copy .env.example to .env and fill it in.")
+    if not cfg.agent.active_api_key:
+        sys.exit(
+            f"No API key for LLM provider {cfg.agent.provider!r} — set the matching key "
+            f"in .env (e.g. GEMINI_API_KEY for the free Gemini tier)."
+        )
 
     loop = asyncio.get_running_loop()
     utterances: asyncio.Queue[bytes] = asyncio.Queue()
@@ -63,21 +66,26 @@ async def run() -> None:
     try:
         while True:
             pcm = await utterances.get()
-            text = await transcriber.transcribe_async(pcm)
-            if not text:
-                continue
-            log.info("Heard: %r", text)
-
-            reply = await orchestrator.handle(text)
-            if not reply:
-                continue
-            log.info("Mahaki: %r", reply)
-
-            listener.mute()
+            # One bad utterance (API error, transcription hiccup) must never take
+            # the whole assistant down — log it and keep listening.
             try:
-                await speaker.say_async(reply)
-            finally:
-                listener.unmute()
+                text = await transcriber.transcribe_async(pcm)
+                if not text:
+                    continue
+                log.info("Heard: %r", text)
+
+                reply = await orchestrator.handle(text)
+                if not reply:
+                    continue
+                log.info("Mahaki: %r", reply)
+
+                listener.mute()
+                try:
+                    await speaker.say_async(reply)
+                finally:
+                    listener.unmute()
+            except Exception:
+                log.exception("Error handling utterance — continuing to listen")
     finally:
         listener.stop()
         speaker.close()

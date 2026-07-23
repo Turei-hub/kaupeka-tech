@@ -182,6 +182,97 @@ async def test_empty_utterance_short_circuits():
     assert await orch.handle("   ") == ""
 
 
+# -- OpenAI-compatible backend (the Gemini path) -----------------------
+
+
+def oai_response(content=None, tool_calls=None):
+    message = SimpleNamespace(content=content, tool_calls=tool_calls)
+    return SimpleNamespace(choices=[SimpleNamespace(message=message)])
+
+
+def oai_tool_call(id, name, arguments):
+    return SimpleNamespace(id=id, type="function",
+                           function=SimpleNamespace(name=name, arguments=arguments))
+
+
+class FakeOpenAI:
+    """Stands in for AsyncOpenAI; pops canned chat.completions in order."""
+
+    def __init__(self, responses):
+        self._responses = list(responses)
+        self.calls = []
+        self.chat = SimpleNamespace(
+            completions=SimpleNamespace(create=self._create))
+
+    async def _create(self, **kwargs):
+        self.calls.append(kwargs)
+        return self._responses.pop(0)
+
+
+def make_openai_orchestrator(responses, registry=None):
+    from agent.llm import OpenAIBackend
+    backend = OpenAIBackend(AgentConfig(), api_key="k", base_url="http://x",
+                            model="gemini-2.5-flash", client=FakeOpenAI(responses))
+    orch = Orchestrator(AgentConfig(), registry or ToolRegistry(), backend=backend)
+    return orch, backend._client
+
+
+@pytest.mark.asyncio
+async def test_openai_backend_plain_answer():
+    orch, client = make_openai_orchestrator([oai_response(content="Kia ora from Gemini")])
+    assert await orch.handle("hello") == "Kia ora from Gemini"
+    # System prompt is injected as the first message for OpenAI-style APIs
+    assert client.calls[0]["messages"][0]["role"] == "system"
+
+
+@pytest.mark.asyncio
+async def test_openai_backend_tool_round_trip():
+    registry = ToolRegistry()
+    pathway_alignment.register(registry)
+
+    orch, client = make_openai_orchestrator([
+        oai_response(tool_calls=[oai_tool_call(
+            "call_1", "pathway_alignment",
+            '{"client_name": "Ngāti Whātua", "needs": "a website and email"}')]),
+        oai_response(content="Digital Foundations fits best."),
+    ], registry)
+
+    reply = await orch.handle("Which pathway for Ngāti Whātua? They need a website.")
+    assert reply == "Digital Foundations fits best."
+
+    # Second call must carry the tool result as a role="tool" message keyed by id
+    followup = client.calls[1]["messages"]
+    tool_msgs = [m for m in followup if m.get("role") == "tool"]
+    assert tool_msgs and tool_msgs[0]["tool_call_id"] == "call_1"
+    assert "Digital Foundations" in tool_msgs[0]["content"]
+
+
+def test_registry_openai_tool_format():
+    registry = ToolRegistry()
+
+    @registry.tool("greet", "Say hello", {"type": "object", "properties": {}})
+    def greet():
+        return "hello"
+
+    assert registry.to_openai_tools() == [
+        {"type": "function", "function": {
+            "name": "greet", "description": "Say hello",
+            "parameters": {"type": "object", "properties": {}}}}
+    ]
+
+
+def test_make_backend_selects_provider():
+    from agent.llm import make_backend, AnthropicBackend, OpenAIBackend
+    assert isinstance(
+        make_backend(AgentConfig(provider="anthropic", anthropic_api_key="k")),
+        AnthropicBackend)
+    assert isinstance(
+        make_backend(AgentConfig(provider="gemini", gemini_api_key="k")),
+        OpenAIBackend)
+    with pytest.raises(ValueError):
+        make_backend(AgentConfig(provider="bogus"))
+
+
 # -- pathway alignment tool --------------------------------------------
 
 

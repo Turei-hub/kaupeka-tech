@@ -5,9 +5,16 @@ faster-whisper>=1.0.0     # local STT, CTranslate2 backend — much faster than 
 pyttsx3>=2.90             # offline TTS (needs espeak-ng on Linux; uses SAPI5 on Windows, NSSpeech on macOS)
 numpy>=1.26.0
 
-# Agent / reasoning layer
-anthropic>=0.40.0
+# Agent / reasoning layer (provider chosen by LLM_PROVIDER in .env)
+anthropic>=0.40.0        # LLM_PROVIDER=anthropic
+openai>=1.40.0           # LLM_PROVIDER=gemini (OpenAI-compatible endpoint) or openai
 python-dotenv>=1.0.0
+
+# Wake-word training (train_mahaki.py only — not needed at runtime)
+torch>=2.2.0              # tiny DNN classifier, CPU-only
+scipy>=1.11.0             # resampling, noise filters, WAV I/O
+tqdm>=4.66.0             # progress bars
+onnxscript>=0.7.0         # required by torch.onnx.export on torch>=2.9
 
 # Dev
 pytest>=8.0.0

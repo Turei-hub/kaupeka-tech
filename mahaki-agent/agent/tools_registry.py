@@ -64,6 +64,21 @@ class ToolRegistry:
             for t in self._tools.values()
         ]
 
+    def to_openai_tools(self) -> list[dict]:
+        """The `tools` parameter for an OpenAI-compatible chat.completions call.
+
+        Same shape used by Gemini's OpenAI-compatible endpoint — the input
+        schema maps straight onto the function's `parameters`.
+        """
+        return [
+            {"type": "function", "function": {
+                "name": t.name,
+                "description": t.description,
+                "parameters": t.input_schema,
+            }}
+            for t in self._tools.values()
+        ]
+
     async def execute(self, name: str, args: dict) -> str:
         """Run a tool and return its result as a string for the tool_result block.
 

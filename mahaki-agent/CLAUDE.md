@@ -1,8 +1,10 @@
 # Mahaki — Local Voice Agent
 
 Voice-first local AI agent for Turei Milner (Kaupeka Tech Ltd). Wake word
-"Mahaki" → local Whisper STT → Claude + tools → offline TTS reply. No cloud
-STT/TTS costs; the only paid API is Anthropic (reasoning layer).
+"Mahaki" → local Whisper STT → LLM + tools → offline TTS reply. No cloud
+STT/TTS costs. The reasoning layer is pluggable (`LLM_PROVIDER` in `.env`):
+Gemini (free tier, default), Anthropic (paid), or any OpenAI-compatible API.
+Backends live in `agent/llm.py`; the audio layer and tools never change.
 
 Not based on the LAE Engine — separate architecture, separate purpose.
 
