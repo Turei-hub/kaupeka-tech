@@ -29,10 +29,13 @@ const details = [
   { label: 'Response time', value: 'Within one business day', href: null },
 ]
 
+const EMPTY_FORM = { name: '', email: '', projectType: '', message: '', company: '' }
+
 export default function Contact() {
-  const [form, setForm] = useState({ name: '', email: '', projectType: '', message: '' })
+  const [form, setForm] = useState(EMPTY_FORM)
   const [errors, setErrors] = useState({})
   const [status, setStatus] = useState('idle')
+  const [errorMessage, setErrorMessage] = useState('')
 
   function validate() {
     const e = {}
@@ -55,16 +58,30 @@ export default function Contact() {
     const e2 = validate()
     if (Object.keys(e2).length) { setErrors(e2); return }
     setStatus('submitting')
+    setErrorMessage('')
     try {
-      const res = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+      const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify(form),
       })
-      setStatus(res.ok ? 'success' : 'error')
+      if (res.ok) {
+        setStatus('success')
+        return
+      }
+      const data = await res.json().catch(() => null)
+      setErrorMessage(data?.error || '')
+      setStatus('error')
     } catch {
       setStatus('error')
     }
+  }
+
+  function reset() {
+    setForm(EMPTY_FORM)
+    setErrors({})
+    setErrorMessage('')
+    setStatus('idle')
   }
 
   const inputClass = 'w-full px-4 py-3 rounded-xl text-sm outline-none transition-all placeholder:text-white/25 focus:border-[#185FA5]'
@@ -86,6 +103,14 @@ export default function Contact() {
           <p className="text-sm max-w-xs" style={{ color: 'rgba(255,255,255,0.55)' }}>
             Thanks for reaching out. We&apos;ll get back to you within one business day.
           </p>
+          <button
+            type="button"
+            onClick={reset}
+            className="text-sm font-medium transition-colors hover:text-white"
+            style={{ color: '#1D9E75' }}
+          >
+            Send another message
+          </button>
         </div>
       </main>
     )
@@ -169,9 +194,23 @@ export default function Contact() {
               />
             </Field>
 
+            {/* Honeypot — hidden from people, tempting to bots. Handled server-side. */}
+            <div className="absolute w-px h-px -left-[9999px] overflow-hidden" aria-hidden="true">
+              <label htmlFor="company">Company</label>
+              <input
+                id="company"
+                name="company"
+                type="text"
+                tabIndex={-1}
+                autoComplete="off"
+                value={form.company}
+                onChange={set('company')}
+              />
+            </div>
+
             {status === 'error' && (
               <p className="text-sm" style={{ color: '#EF9F27' }}>
-                Something went wrong. Please try again or email us directly at hello@kaupekadigital.com
+                {errorMessage || 'Something went wrong.'} Please try again or email us directly at hello@kaupekadigital.com
               </p>
             )}
 

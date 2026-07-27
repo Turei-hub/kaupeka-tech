@@ -8,6 +8,7 @@ export default defineConfig([
   globalIgnores(['dist']),
   {
     files: ['**/*.{js,jsx}'],
+    ignores: ['api/**', '*.config.js'],
     extends: [
       js.configs.recommended,
       reactHooks.configs.flat.recommended,
@@ -17,5 +18,11 @@ export default defineConfig([
       globals: globals.browser,
       parserOptions: { ecmaFeatures: { jsx: true } },
     },
+  },
+  {
+    // Vercel serverless functions and build configs run on Node, not the browser.
+    files: ['api/**/*.js', '*.config.js'],
+    extends: [js.configs.recommended],
+    languageOptions: { globals: globals.node },
   },
 ])
