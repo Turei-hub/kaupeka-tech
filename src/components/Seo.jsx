@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 
-const SITE = 'https://kaupekadigital.com'
+const SITE = 'https://www.kaupekadigital.com'
 
 const DEFAULT_DESC =
   'Kaupeka Digital is a New Zealand digital studio building websites and SaaS products for NZ businesses, Māori organisations, and anyone who needs tech that actually works.'

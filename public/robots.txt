@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://kaupekadigital.com/sitemap.xml
+Sitemap: https://www.kaupekadigital.com/sitemap.xml
