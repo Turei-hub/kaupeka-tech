@@ -8,8 +8,10 @@ const BREVO_ENDPOINT = 'https://api.brevo.com/v3/smtp/email'
 // delivered to contact@ instead — both route into the same inbox via Cloudflare
 // Email Routing, and keeping them distinct avoids Gmail treating the enquiry as
 // a message you sent to yourself.
-const FROM = process.env.CONTACT_FROM || 'hello@kaupekadigital.com'
-const TO = process.env.CONTACT_TO || 'contact@kaupekadigital.com'
+// Trimmed because a value pasted into a dashboard field easily picks up
+// whitespace, and Brevo rejects the send rather than tolerating it.
+const FROM = (process.env.CONTACT_FROM || 'hello@kaupekadigital.com').trim()
+const TO = (process.env.CONTACT_TO || 'contact@kaupekadigital.com').trim()
 
 const MAX_LENGTHS = { name: 100, email: 200, projectType: 80, message: 5000 }
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
