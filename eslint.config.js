@@ -5,7 +5,9 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  // .venv holds vendored JS from Python packages (torch, win32com, sklearn) —
+  // third-party code we neither own nor ship.
+  globalIgnores(['dist', '**/.venv/**']),
   {
     files: ['**/*.{js,jsx}'],
     ignores: ['api/**', '*.config.js'],

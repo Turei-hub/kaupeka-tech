@@ -62,8 +62,6 @@ const stats = [
   { value: '5',   label: 'Live client sites',  color: '#185FA5' },
   { value: '100%', label: 'Real products, real clients', color: '#EF9F27' },
 ]
-const avatars = ['RA', 'JT', 'ME', 'RY']
-const avatarColors = ['#185FA5', '#1D9E75', '#EF9F27', '#185FA5']
 
 function SocialProof() {
   const ref = useFadeIn(0)

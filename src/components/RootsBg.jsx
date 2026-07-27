@@ -1,12 +1,14 @@
+const teal = '#1D9E75'
+const blue = '#185FA5'
+
+/* Dot at a junction or endpoint. Declared at module scope so it stays a stable
+   component type — defining it inside RootsBg makes React treat it as a new
+   type on every render and remount all ~40 dots. */
+function Dot({ cx, cy, r = 4, color = teal }) {
+  return <circle cx={cx} cy={cy} r={r} fill={color} />
+}
+
 export default function RootsBg() {
-  const teal = '#1D9E75'
-  const blue = '#185FA5'
-
-  /* Dot at a junction or endpoint */
-  const Dot = ({ cx, cy, r = 4, color = teal }) => (
-    <circle cx={cx} cy={cy} r={r} fill={color} />
-  )
-
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
