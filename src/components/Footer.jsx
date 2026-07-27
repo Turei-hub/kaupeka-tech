@@ -45,6 +45,9 @@ export default function Footer() {
           <a href="mailto:hello@kaupekadigital.com" className="text-sm text-white/55 hover:text-white transition-colors w-fit">
             hello@kaupekadigital.com
           </a>
+          <div className="mt-4">
+            <img src="/logo.svg" alt="Kaupeka Digital" className="h-20 w-auto" />
+          </div>
         </div>
       </div>
 
