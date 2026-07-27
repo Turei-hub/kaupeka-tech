@@ -4,7 +4,7 @@ const projects = [
     category: 'AI · E-commerce',
     desc: 'Māori AI art brand website with user authentication, digital product sales, and AI-generated artwork. Built with a full Supabase backend and Stripe payments.',
     tech: ['React', 'Vite', 'Tailwind CSS', 'Supabase', 'Stripe'],
-    url: 'https://cultural-ai-muse.vercel.app',
+    url: null,
     color: '#1D9E75',
   },
   {
@@ -20,7 +20,7 @@ const projects = [
     category: 'Non-profit · Web',
     desc: 'Website for the Jerrican Trust. A clean, fast site built to represent the organisation and communicate their mission online.',
     tech: ['React', 'Vite', 'Tailwind CSS'],
-    url: 'https://jerrican-trust.vercel.app',
+    url: null,
     color: '#185FA5',
   },
   {
